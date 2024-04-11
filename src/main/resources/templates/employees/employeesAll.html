@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Employees</title>
+</head>
+<body>
+<p>Список сотрудников</p>
+<div th:each ="employee : ${people}">
+    <a th:href ="@{employees/{id}(id=${employee.getId_employee()})}"
+       th:text = "${employee}"> text</a>
+</div>
+
+</body>
+</html>

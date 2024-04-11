@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+<p>Обновить документ</p>
+<form th:method = "PATCH" th:action = "@{http://localhost:8080/documents/{id} (id = ${updatedDocument.getId_document()})}" th:object ="${updatedDocument}">
+    <div>
+        <lable for="updatedDocument">Введите предмет‌ ‌поручения</lable>
+        <input type="text" th:field ="*{subject_document}" id="subject_document">
+    </div>
+<!--    <div>-->
+<!--        <label for="author_document">Выберите автора‌ ‌поручения:</label>-->
+<!--        <select th:object="${employees}"  id="author_document">-->
+<!--            <option th:each="employee : ${employees}" th:value="${employee.getId_employee()}"-->
+<!--                    th:text="${employee}">-->
+<!--            </option>-->
+<!--        </select>-->
+<!--    </div>-->
+<!--    <div>-->
+<!--            <label for="executors_document">Выберите исполнителей ‌поручения:</label>-->
+<!--            <select th:object="${employees}" id="executors_document">-->
+<!--                <option th:each="employee : ${employees}" th:value="${employee.getId_employee()}"-->
+<!--                        th:text="${employee}">-->
+<!--                </option>-->
+<!--            </select>-->
+<!--            <input type="submit" value=" Назначить исполнителей">-->
+<!--    </div>-->
+    <div>
+        <lable for="updatedDocument">Введите срок‌ ‌исполнения</lable>
+        <input type="date" th:field ="*{period_of_execution}" id="period_of_execution">
+    </div>
+    <div>
+        <lable for="updatedDocument">Введите текст‌ ‌поручения</lable>
+        <input type="text" th:field ="*{text_document}" id="text_document">
+    </div>
+
+    <input type="submit" value="Сохранить!">
+</form>
+</body>
+</html>

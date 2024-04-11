@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Subdivision</title>
+</head>
+<body>
+<p>Подразделение: </p>
+
+<table>
+    <tr>
+        <td><p>Наименование</p></td>
+        <td><p th:text ="${subdivision.getName_subdivision()}">text</p></td>
+    </tr>
+    <tr>
+        <td><p>Контактные‌ ‌данные</p></td>
+        <td><p th:text ="${subdivision.getСontact_details_subdivision()}">text</p></td>
+    </tr>
+    <tr>
+        <td><p>Руководитель организации</p></td>
+        <td><p th:text ="${subdivision.getSupervisor_subdivision()}">text</p></td>
+    </tr>
+    <tr>
+        <td><p>Наименование организации</p></td>
+        <td><p th:text ="${subdivision.getOrganization_id().getName_organization()}">text</p></td>
+    </tr>
+    <tr>
+        <td><p>Сотрудники:</p></td>
+        <td>
+            <div th:each="employee : ${subdivision.getEmployees()}">
+                <a th:href="@{http://localhost:8080/employees/{id} (id = ${employee.getId_employee()})}"
+                   th:text ="${employee.getSurname_employee() + ' ' + employee.getName_employee() + ' ' + employee.getPatronymic_employee()}">text</a>
+            </div>
+        </td>
+    </tr>
+</table>
+
+
+</body>
+</html>

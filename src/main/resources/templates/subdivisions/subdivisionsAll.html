@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Subdivisions</title>
+</head>
+<body>
+<p>Список подразделений</p>
+<div th:each ="subdivision : ${subdivisions}">
+    <a th:href ="@{subdivisions/{id}(id=${subdivision.getId_subdivision()})}"
+       th:text = "${subdivision.getName_subdivision()}"> text</a>
+</div>
+
+</body>
+</html>

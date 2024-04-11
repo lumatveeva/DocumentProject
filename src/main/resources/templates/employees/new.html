@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Employee</title>
+</head>
+<body>
+<p>Создать нового сотрудника</p>
+<form th:method = "POST" th:action = "@{/employees}" th:object ="${employee}">
+    <div>
+        <lable for="employee">Введите фамилию сотрудника</lable>
+        <input type="text" th:field ="*{surname_employee}" id="surname_employee">
+    </div>
+    <div>
+        <lable for="employee">Введите имя сотрудника</lable>
+        <input type="text" th:field ="*{name_employee}" id="name_employee">
+    </div>
+    <div>
+        <lable for="employee">Введите отчество сотрудника</lable>
+        <input type="text" th:field ="*{patronymic_employee}" id="patronymic_employee">
+    </div>
+    <div>
+        <lable for="employee">Введите должность сотрудника</lable>
+        <input type="text" th:field ="*{position_employee}" id="position_employee">
+    </div>
+    <div>
+        <label for="subdivision_id">Выберите подразделение сотрудника:</label>
+
+        <select th:object="${subdivisions}" id="subdivision_id" >
+
+            <option th:each="subdivision : ${subdivisions}" th:value="${subdivision.getId_subdivision()}"
+                    th:text="${subdivision.getName_subdivision()}">
+            </option>
+        </select>
+    </div>
+
+    <input type="submit" value="Сохранить!">
+</form>
+</body>
+</html>

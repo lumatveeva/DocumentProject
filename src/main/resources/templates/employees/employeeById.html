@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Employee</title>
+</head>
+<body>
+<p>Сотрудник: </p>
+<table>
+    <tr>
+        <td><p>ФИО</p></td>
+        <td><p th:text ="${employee}">text</p></td>
+    </tr>
+    <tr>
+        <td><p>Должность</p></td>
+        <td><p th:text ="${employee.getPosition_employee()}">text</p></td>
+    </tr>
+    <tr>
+        <td><p>Название организации/ подразделения</p></td>
+        <td><p th:text ="${employee.getSubdivision_id().getName_subdivision() + '/ ' + employee.getSubdivision_id().getOrganization_id().getName_organization()}">text</p></td>
+    </tr>
+    <tr>
+        <td><p>Созданные документы:</p></td>
+        <td>
+            <div th:each="doc : ${employee.getAuthor_documents()}">
+                <a th:href="@{http://localhost:8080/documents/{id} (id = ${doc.getId_document()})}"
+                   th:text ="${doc.getSubject_document()}">text</a>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td><p>Документы на исполнение:</p></td>
+        <td>
+            <div th:each="doc : ${employee.getExecutor_employee()}">
+                <a th:href="@{http://localhost:8080/documents/{id} (id = ${doc.getId_document()})}"
+                   th:text ="${doc.getSubject_document()}">text</a>
+            </div>
+        </td>
+    </tr>
+</table>
+
+</body>
+</html>

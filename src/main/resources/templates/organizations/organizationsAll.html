@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Organizations</title>
+</head>
+<body>
+<p>Список организаций</p>
+<br>
+<div th:each ="organization : ${organizations}">
+    <a th:href ="@{organizations/{id} (id = ${organization.getId_organization()})}"
+       th:text ="${organization.getName_organization()}">text</a>
+</div>
+<a href="organizations/new">Создать новую организацию</a>
+<a href="subdivisions">Посмотреть список организаций</a>
+<a href="employees">Посмотреть список сотрудников</a>
+<a href="documents">Посмотреть список документов</a>
+</body>
+</html>

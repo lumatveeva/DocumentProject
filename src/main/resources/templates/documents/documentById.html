@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+<table>
+
+    <tr>
+        <td>Предмет‌ ‌поручения</td>
+        <td><p th:text = "${doc.getSubject_document()}">Предмет‌ ‌поручения</p></td>
+    </tr>
+
+    <tr>
+        <td>Автор‌ ‌поручения</td>
+        <td><p th:text = "${doc.getAuthor_document()}">Автор‌ ‌поручения</p></td>
+    </tr>
+
+    <tr>
+        <td>ФИО исполнителя</td>
+        <td>
+            <div th:each = "employee : ${doc.getExecutors_document()}">
+                <a th:href ="@{http://localhost:8080/employees/{id} (id = ${employee.getId_employee()})}"
+                   th:text="${employee}">ФИО исполнителя</a>
+            </div>
+        </td>
+    </tr>
+
+    <tr>
+        <td>Срок‌ ‌исполнения</td>
+        <td><p th:text = "${doc.getPeriod_of_execution()}">Срок‌ ‌исполнения</p></td>
+    </tr>
+
+    <tr>
+        <td>Признак‌ ‌контрольности</td>
+        <td><p th:text = "${doc.getDocumentStatus()}">Признак‌ ‌контрольности</p></td>
+    </tr>
+
+    <tr>
+        <td>Признак‌ ‌поручения</td>
+        <td><p th:text = "${doc.isDone()}">Признак‌ ‌исполнения</p></td>
+    </tr>
+
+    <tr>
+        <td>Текст‌ ‌поручения</td>
+        <td><p th:text = "${doc.getText_document()}">Текст‌ ‌поручения</p></td>
+    </tr>
+
+</table>
+
+<div th:if="${doc.getDocumentStatus().equals('NEW')}">
+    <button>
+        <a th:href="@{/documents/{id}/execution (id = ${doc.getId_document()})}">Отправить на исполнение</a>
+    </button>
+</div>
+<div th:if="${doc.getDocumentStatus().equals('EXECUTION')}">
+    <button>
+        <a th:href="@{/documents/{id}/control (id = ${doc.getId_document()})}">Отправить на контроль</a>
+    </button>
+</div>
+
+<div th:if="${doc.getDocumentStatus().equals('CONTROL')}">
+    <button>
+        <a th:href="@{/documents/{id}/revision (id = ${doc.getId_document()})}">Отправить на доработку</a>
+    </button>
+    <button>
+        <a th:href="@{/documents/{id}/accept (id = ${doc.getId_document()})}">Прием документа</a>
+    </button>
+</div>
+<div th:if="${doc.getDocumentStatus().equals('REVISION')}">
+    <button>
+        <a th:href="@{/documents/{id}/execution (id = ${doc.getId_document()})}">Отправить на исполнение</a>
+    </button>
+</div>
+<!--<div th:if="${doc.getDocumentStatus().equals('ACCEPTANCE')}">-->
+
+<!--        <a th:href="@{/documents/{id}/done (id = ${doc.getId_document()})}">Документ исполнен</a>-->
+
+<!--</div>-->
+<!--<form th:method="PATCH" th:action="@{/documents/{id}/assignExecutor(id=${doc.getId_document()})}">-->
+<!--    <label for="executors_document">Выберите исполнителей ‌поручения:</label>-->
+
+<!--    <select th:object="${employees}" id="executors_document">-->
+
+<!--        <option th:each="employee : ${employees}" th:value="${employee.getId_employee()}"-->
+<!--                th:text="${employee}">-->
+<!--        </option>-->
+<!--    </select>-->
+
+<!--    <input type="submit" value=" Назначить исполнителей">-->
+<!--</form>-->
+<button>
+    <a th:href="@{http://localhost:8080/documents/{id}/edit (id = ${doc.getId_document()})}">Редактировать документ</a>
+</button>
+
+<form th:method="DELETE" th:action="@{http://localhost:8080/documents/{id} (id = ${doc.getId_document()})}">
+    <input type="submit" value="Удалить">
+</form>
+
+
+</body>
+</html>

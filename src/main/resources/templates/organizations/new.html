@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Organization</title>
+</head>
+<body>
+<p>Создать новую организацию</p>
+<form th:method = "POST" th:action = "@{/organizations}" th:object ="${organization}">
+  <div>
+    <lable for="organization">Введите название организации</lable>
+    <input type="text" th:field ="*{name_organization}" id="name_organization">
+  </div>
+  <div>
+    <lable for="organization">Введите физический адрес организации</lable>
+    <input type="text" th:field ="*{physical_address_organization}" id="physical_address_organization">
+  </div>
+  <div>
+    <lable for="organization">Введите юридический адрес организации</lable>
+    <input type="text" th:field ="*{legal_address_organization}" id="legal_address_organization">
+  </div>
+  <div>
+    <lable for="organization">Введите руководителя организации</lable>
+    <input type="text" th:field ="*{supervisor_organization}" id="supervisor_organization">
+  </div>
+
+  <input type="submit" value="Сохранить!">
+</form>
+</body>
+</html>

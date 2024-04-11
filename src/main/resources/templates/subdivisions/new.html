@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<p>Создать новое подразделение</p>
+<form th:method = "POST" th:action = "@{/subdivisions}" th:object ="${subdivision}">
+    <div>
+        <lable for="subdivision">Введите название подразделения</lable>
+        <input type="text" th:field ="*{name_subdivision}" id="name_subdivision">
+    </div>
+    <div>
+        <lable for="subdivision">Введите контактные данные подразделения</lable>
+        <input type="text" th:field ="*{сontact_details_subdivision}" id="сontact_details_subdivision">
+    </div>
+    <div>
+        <lable for="subdivision">Введите руководителя подразделения</lable>
+        <input type="text" th:field ="*{supervisor_subdivision}" id="supervisor_subdivision">
+    </div>
+    <div>
+        <lable for="subdivision">Укажите организацию к которой принадлежит подразделение</lable>
+        <input type="text" th:field ="*{organization_id}" id="organization_id">
+    </div>
+
+    <input type="submit" value="Сохранить!">
+</form>
+</body>
+</html>

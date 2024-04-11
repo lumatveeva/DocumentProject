@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Organization</title>
+</head>
+<body>
+<p>Организация: </p>
+<table>
+    <tr>
+        <td><p>Наименование</p></td>
+        <td><p th:text ="${organization.getName_organization()}">text</p></td>
+    </tr>
+    <tr>
+        <td><p>Физический адрес</p></td>
+        <td><p th:text ="${organization.getPhysical_address_organization()}">text</p></td>
+    </tr>
+    <tr>
+        <td><p>Юридический адрес</p></td>
+        <td><p th:text ="${organization.getLegal_address_organization()}">text</p></td>
+    </tr>
+    <tr>
+        <td><p>Руководитель организации</p></td>
+        <td><p th:text ="${organization.getSupervisor_organization()}">text</p></td>
+    </tr>
+    <tr>
+        <td><p>Подразделения:</p></td>
+        <td>
+            <div th:each="subdivision : ${organization.getSubdivisions()}">
+                <a th:href="@{http://localhost:8080/subdivisions/{id} (id = ${subdivision.getId_subdivision()})}"
+                   th:text ="${subdivision.getName_subdivision()}">text</a>
+            </div>
+        </td>
+    </tr>
+</table>
+
+
+
+</body>
+</html>
