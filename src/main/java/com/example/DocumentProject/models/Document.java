@@ -28,10 +28,8 @@ public class Document {
     private List<Employee> executors_document;
 
     @Column(name = "period_of_execution")
-    @Temporal(TemporalType.DATE)
-    @DateTimeFormat(pattern = "yyyy/MM/dd")
-    //@NotEmpty(message = "Необходимо ввести срок исполнения поручения")
-    private Date period_of_execution;
+//    @NotEmpty(message = "Необходимо ввести срок исполнения поручения")
+    private String period_of_execution;
 
     @Column(name = "text_document")
     @NotEmpty(message = "Необходимо ввести текст поручения")
@@ -78,11 +76,11 @@ public class Document {
         this.executors_document = executors_document;
     }
 
-    public Date getPeriod_of_execution() {
+    public String getPeriod_of_execution() {
         return period_of_execution;
     }
 
-    public void setPeriod_of_execution(Date period_of_execution) {
+    public void setPeriod_of_execution(String period_of_execution) {
         this.period_of_execution = period_of_execution;
     }
 

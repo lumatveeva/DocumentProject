@@ -10,6 +10,7 @@
     <div>
         <lable for="document">Введите предмет‌ ‌поручения</lable>
         <input type="text" th:field ="*{subject_document}" id="subject_document">
+        <div style="color:red" th:if="${#fields.hasErrors}" th:errors="*{subject_document}">Name error</div>
     </div>
     <div>
         <label for="author_document">Выберите автора поручения:</label>
@@ -17,6 +18,19 @@
             <option th:each="employee : ${employees}" th:value="${employee.getId_employee()}" th:text="${employee}">
             </option>
         </select>
+    </div>
+    <div>
+        <lable for="period_of_execution">Введите срок‌ ‌исполнения</lable>
+        <input type="text" th:field ="*{period_of_execution}" id="period_of_execution" >
+        <div style="color:red" th:if="${#fields.hasErrors('period_of_execution')}" th:errors="*{period_of_execution}">Name error</div>
+
+    </div>
+
+    <div>
+        <lable for="document">Введите текст‌ ‌поручения</lable>
+        <input type="text" th:field ="*{text_document}" id="text_document">
+        <div style="color:red" th:if="${#fields.hasErrors('text_document')}" th:errors="*{text_document}">Name error</div>
+
     </div>
 <!--    <div>-->
 <!--        <label for="executors_document">Выберите исполнителей поручения:</label>-->
@@ -27,14 +41,6 @@
 <!--    </div>-->
 
 
-<!--    <div>-->
-<!--        <label for="author_document">Выберите автора‌ ‌поручения:</label>-->
-<!--        <select th:object="${employees}"  id="author_document">-->
-<!--            <option th:each="employee : ${employees}" th:value="${employee.getId_employee()}"-->
-<!--                    th:text="${employee}">-->
-<!--            </option>-->
-<!--        </select>-->
-<!--    </div>-->
 <!--    <div>-->
 <!--            <label for="executors_document">Выберите исполнителей ‌поручения:</label>-->
 
@@ -47,15 +53,7 @@
 
 <!--            <input type="submit" value=" Назначить исполнителей">-->
 <!--    </div>-->
-    <div>
-        <lable for="period_of_execution">Введите срок‌ ‌исполнения</lable>
-        <input type="date"  id="period_of_execution" pattern="\d{4}/\d{2}/\d{2}">
-    </div>
 
-    <div>
-        <lable for="document">Введите текст‌ ‌поручения</lable>
-        <input type="text" th:field ="*{text_document}" id="text_document">
-    </div>
 
     <input type="submit" value="Сохранить!">
 </form>

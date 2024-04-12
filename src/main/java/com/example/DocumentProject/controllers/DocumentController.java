@@ -11,7 +11,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -44,27 +43,24 @@ public class DocumentController {
         return "/documents/new";
     }
     @PostMapping()
-    public String save(@ModelAttribute("document") Document document,
+    public String save(@ModelAttribute("document") @Valid Document document,
                        @ModelAttribute("author") Employee author,
-                       @ModelAttribute("date") Date date){
+                       BindingResult bindingResult){
 //                       @RequestParam("executors") List<Employee> executors) {
-        assignAuthor(document.getId_document(), author);
-        document.setPeriod_of_execution(date);
+        if(bindingResult.hasErrors()){
+            return "/documents/new";
+        }
 //        assignExecutor(document.getId_document(), executors);
         documentService.save(document);
+        documentService.assignStatus(document.getId_document());
+
         return "redirect:/documents";
     }
-//    @PostMapping()
-//    public String save(@ModelAttribute("document") Document document,
-//                       @ModelAttribute ("employee") Employee employee){
-//        assignAuthor(document.getId_document(), employee);
-//        documentService.save(document);
-//        return "redirect:/documents";
-//    }
+
     @GetMapping("{id}/edit")
     public String editDocument(@PathVariable("id") int id, Model model){
         model.addAttribute("updatedDocument", documentService.findById(id));
-//        model.addAttribute("employees", employeeService.findAll());
+        model.addAttribute("employees", employeeService.findAll());
         return "documents/updateDocument";
     }
     @PatchMapping("{id}")
@@ -82,9 +78,6 @@ public class DocumentController {
     public String deleteDocument(@PathVariable("id") int id){
         documentService.delete(id);
         return"redirect:documents";
-    }
-    private void assignAuthor(int documentId,Employee employee){
-        documentService.assignAuthor(documentId, employee);
     }
 
     private void assignExecutor(int documentId, List<Employee> executors){

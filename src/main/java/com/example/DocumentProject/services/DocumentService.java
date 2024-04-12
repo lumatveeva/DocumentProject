@@ -1,15 +1,12 @@
 package com.example.DocumentProject.services;
 
 import com.example.DocumentProject.models.Document;
-import com.example.DocumentProject.models.DocumentStatus;
 import com.example.DocumentProject.models.Employee;
 import com.example.DocumentProject.repositories.DocumentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 @Service
@@ -41,12 +38,9 @@ public class DocumentService {
     }
 
     @Transactional //назначить автора поручения
-    public void assignAuthor(int documentId, Employee employee){
+    public void assignStatus(int documentId){
         documentRepository.findById(documentId).ifPresent(
-                doc -> {
-                    doc.setAuthor_document(employee);
-                    doc.setDocumentStatus("NEW");
-                });
+                doc -> doc.setDocumentStatus("NEW"));
     }
     @Transactional //назначить исполнителя получения
     public void assignExecutor(int documentId, List<Employee> executors){
