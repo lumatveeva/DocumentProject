@@ -74,10 +74,10 @@ public class DocumentController {
         return "redirect:/documents";
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("{id}/delete")
     public String deleteDocument(@PathVariable("id") int id){
         documentService.delete(id);
-        return"redirect:documents";
+        return"redirect:http://localhost:8080/documents";
     }
 
     private void assignExecutor(int documentId, List<Employee> executors){

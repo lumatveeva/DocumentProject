@@ -94,7 +94,7 @@
     <a th:href="@{http://localhost:8080/documents/{id}/edit (id = ${doc.getId_document()})}">Редактировать документ</a>
 </button>
 
-<form th:method="DELETE" th:action="@{http://localhost:8080/documents/{id} (id = ${doc.getId_document()})}">
+<form th:method="delete" th:action="@{http://localhost:8080/documents/{id}/delete (id = ${doc.getId_document()})}">
     <input type="submit" value="Удалить">
 </form>
 
