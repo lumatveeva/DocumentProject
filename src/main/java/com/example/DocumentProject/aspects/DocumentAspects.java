@@ -35,11 +35,6 @@ public class DocumentAspects {
     public void beforeDeleteDocumentAdvice(){
         System.out.println("before: попытка удаления существующего документа");
     }
-    @Before("execution(public String com.example.DocumentProject.controllers.DocumentController.deleteDocument(*))")
-    public void beforeDeDocumentAdvice(){
-        System.out.println("before: попытка удаления существующего документа");
-    }
-
 
     @Before("execution(public String com.example.DocumentProject.controllers.DocumentController.start*(*))")
     public void beforeStartDocumentAdvice(){
