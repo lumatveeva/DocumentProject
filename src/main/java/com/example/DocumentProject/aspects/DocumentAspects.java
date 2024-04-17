@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @Component
 public class DocumentAspects {
     private LocalDateTime currentDate = LocalDateTime.now();
-    @Before("execution(public String com.example.DocumentProject.controllers.DocumentController.findAll(*))")
+    @Before("execution(public String com.example.DocumentProject.controllers.DocumentController.findAll(..))")
     public void beforeFindAllDocumentAdvice(){
         System.out.println(currentDate + " BEFORE: попытка вывести список всех документов");
     }
