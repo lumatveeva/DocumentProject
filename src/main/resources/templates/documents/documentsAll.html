@@ -1,32 +1,32 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:href="http://www.w3.org/1999/xhtml">
-<head>
-    <meta charset="UTF-8">
-    <title>Documents</title>
-</head>
-<body>
-<table>
-    <thead>
-    <tr>
-        <th>Предмет‌ ‌поручения</th>
-        <th>Автор ‌поручения</th>
-        <th>Текст‌ ‌поручения </th>
-    </tr>
-    </thead>
-    <tbody>
-    <div th:each ="doc : ${docs}">
-        <tr>
-            <td>
-                <a th:href ="@{documents/{id}(id=${doc.getId_document()})}"
-                    th:text = "${doc.getSubject_document()}">Предмет‌ ‌поручения</a>
-            </td>
-            <td th:text = "${doc.getAuthor_document()}">Автор‌ ‌поручения</td>
-            <td th:text = "${doc.getText_document()}">Текст‌ ‌поручения</td>
-        </tr>
-    </div>
-    </tbody>
-</table>
-<br>
-<a href="documents/new"> Создать новый документ</a>
-</body>
-</html>
+<!--<!DOCTYPE html>-->
+<!--<html lang="en" xmlns:href="http://www.w3.org/1999/xhtml">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Documents</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--<table>-->
+<!--    <thead>-->
+<!--    <tr>-->
+<!--        <th>Предмет‌ ‌поручения</th>-->
+<!--        <th>Автор ‌поручения</th>-->
+<!--        <th>Текст‌ ‌поручения </th>-->
+<!--    </tr>-->
+<!--    </thead>-->
+<!--    <tbody>-->
+<!--    <div th:each ="doc : ${docs}">-->
+<!--        <tr>-->
+<!--            <td>-->
+<!--                <a th:href ="@{documents/{id}(id=${doc.getIdDocument()})}"-->
+<!--                    th:text = "${doc.getSubjectDocument()}">Предмет‌ ‌поручения</a>-->
+<!--            </td>-->
+<!--            <td th:text = "${doc.getAuthorDocument()}">Автор‌ ‌поручения</td>-->
+<!--            <td th:text = "${doc.getTextDocument()}">Текст‌ ‌поручения</td>-->
+<!--        </tr>-->
+<!--    </div>-->
+<!--    </tbody>-->
+<!--</table>-->
+<!--<br>-->
+<!--<a href="documents/new"> Создать новый документ</a>-->
+<!--</body>-->
+<!--</html>-->

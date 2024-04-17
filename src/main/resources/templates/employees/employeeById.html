@@ -23,8 +23,8 @@
         <td><p>Созданные документы:</p></td>
         <td>
             <div th:each="doc : ${employee.getAuthor_documents()}">
-                <a th:href="@{http://localhost:8080/documents/{id} (id = ${doc.getId_document()})}"
-                   th:text ="${doc.getSubject_document()}">text</a>
+                <a th:href="@{http://localhost:8080/documents/{id} (id = ${doc.getIdDocument()})}"
+                   th:text ="${doc.getSubjectDocument()}">text</a>
             </div>
         </td>
     </tr>
@@ -32,8 +32,8 @@
         <td><p>Документы на исполнение:</p></td>
         <td>
             <div th:each="doc : ${employee.getExecutor_employee()}">
-                <a th:href="@{http://localhost:8080/documents/{id} (id = ${doc.getId_document()})}"
-                   th:text ="${doc.getSubject_document()}">text</a>
+                <a th:href="@{http://localhost:8080/documents/{id} (id = ${doc.getIdDocument()})}"
+                   th:text ="${doc.getSubjectDocument()}">text</a>
             </div>
         </td>
     </tr>

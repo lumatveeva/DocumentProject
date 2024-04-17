@@ -22,86 +22,96 @@ public class DocumentController {
     private EmployeeService employeeService;
 
     @GetMapping()
-    public String findAll(Model model){
-        model.addAttribute("docs", documentService.findAll());
+    public String findAll(Model model,
+                          @RequestParam(value = "page", required = false) Integer page,
+                          @RequestParam(value = "itemPerPage", required = false) Integer itemPerPage,
+                          @RequestParam(value = "sortBy", required = false) String sortBy){
+        if((page == null || itemPerPage == null) && sortBy == null){
+            model.addAttribute("docs", documentService.findAll());
+        }
+        if(page != null && itemPerPage != null && sortBy == null){
+            model.addAttribute("docs", documentService.findAllPagable(page, itemPerPage));
+        }
+        if ((page == null || itemPerPage == null) && sortBy != null){
+            model.addAttribute("docs", documentService.findAllSort(sortBy));
+        }
         return"/documents/documentsAll";
     }
+
     @GetMapping("/{id}")
-    public String findById(@PathVariable("id") int id, Model model){
+    public void findById(@PathVariable("id") int id, Model model){
         model.addAttribute("doc", documentService.findById(id));
         model.addAttribute("employees", employeeService.findAll());
 
-        return "/documents/documentById";
+//        return "/documents/documentById";
     }
 
     @GetMapping("/new")
-    public String create(Model model){
+    public void create(Model model){
         model.addAttribute("document", new Document());
         model.addAttribute("employees", employeeService.findAll());
 //        model.addAttribute("executorsSize", employeeService.findAll().size());
 
-        return "/documents/new";
+//        return "/documents/new";
     }
     @PostMapping()
-    public String save(@ModelAttribute("document") @Valid Document document,
-                       @ModelAttribute("author") Employee author,
+    public void save(@ModelAttribute("document") @Valid Document document,
+//                       @ModelAttribute("author") Employee author,
+                       @RequestParam("executors") List<Employee> executors,
                        BindingResult bindingResult){
-//                       @RequestParam("executors") List<Employee> executors) {
         if(bindingResult.hasErrors()){
-            return "/documents/new";
+            System.out.println("Ошибка создания документа");
+//            return "/documents/new";
         }
-//        assignExecutor(document.getId_document(), executors);
         documentService.save(document);
-        documentService.assignStatus(document.getId_document());
+//        documentService.assignStatus(document.getIdDocument());
+        documentService.assignExecutor(document.getIdDocument(), executors);
 
-        return "redirect:/documents";
+//        return "redirect:/documents";
     }
 
     @GetMapping("{id}/edit")
-    public String editDocument(@PathVariable("id") int id, Model model){
+    public void editDocument(@PathVariable("id") int id, Model model){
         model.addAttribute("updatedDocument", documentService.findById(id));
         model.addAttribute("employees", employeeService.findAll());
-        return "documents/updateDocument";
+//        return "documents/updateDocument";
     }
     @PatchMapping("{id}")
-    public String updateDocument(@ModelAttribute("updatedDocument") @Valid Document updatedDocument,
+    public void updateDocument(@ModelAttribute("updatedDocument") @Valid Document updatedDocument,
                                  @PathVariable("id") int id, BindingResult bindingResult){
         if(bindingResult.hasErrors()){
             System.out.println("Ошибка в обновлении документа");
-            return "documents/updateDocument";
+//            return "documents/updateDocument";
         }
         documentService.update(updatedDocument,id);
-        return "redirect:/documents";
+//        return "redirect:/documents";
     }
 
     @DeleteMapping("{id}/delete")
-    public String deleteDocument(@PathVariable("id") int id){
+    public void deleteDocument(@PathVariable("id") int id){
         documentService.delete(id);
-        return"redirect:http://localhost:8080/documents";
+//        return"redirect:http://localhost:8080/documents";
     }
 
-    private void assignExecutor(int documentId, List<Employee> executors){
-        documentService.assignExecutor(documentId, executors);
-    }
     @GetMapping("/{id}/execution")
-    public String startExecution(@PathVariable("id") int id){
+    public void startExecution(@PathVariable("id") int id){
         documentService.startExecution(id);
-        return "redirect:/documents";
+//        return "redirect:/documents";
     }
     @GetMapping("/{id}/control")
-    public String startControl(@PathVariable("id") int id){
+    public void startControl(@PathVariable("id") int id){
         documentService.startControl(id);
-        return "redirect:/documents";
+//        return "redirect:/documents";
     }
     @GetMapping("/{id}/revision")
-    public String startRevision(@PathVariable("id") int id){
+    public void startRevision(@PathVariable("id") int id){
         documentService.startRevision(id);
-        return "redirect:/documents";
+//        return "redirect:/documents";
     }
     @GetMapping("/{id}/accept")
-    public String startAcceptance(@PathVariable("id") int id){
+    public void startAcceptance(@PathVariable("id") int id){
         documentService.startAcceptance(id);
-        return "redirect:/documents";
+//        return "redirect:/documents";
     }
 
 //    @GetMapping("{id}/done")

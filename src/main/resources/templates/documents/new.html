@@ -1,61 +1,61 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Document</title>
-</head>
-<body>
-<p>Создать новый документ</p>
-<form th:method = "POST" th:action = "@{/documents}" th:object ="${document}">
-    <div>
-        <lable for="document">Введите предмет‌ ‌поручения</lable>
-        <input type="text" th:field ="*{subject_document}" id="subject_document">
-        <div style="color:red" th:if="${#fields.hasErrors}" th:errors="*{subject_document}">Name error</div>
-    </div>
-    <div>
-        <label for="author_document">Выберите автора поручения:</label>
-        <select th:field="*{author_document}" id="author_document">
-            <option th:each="employee : ${employees}" th:value="${employee.getId_employee()}" th:text="${employee}">
-            </option>
-        </select>
-    </div>
-    <div>
-        <lable for="period_of_execution">Введите срок‌ ‌исполнения</lable>
-        <input type="text" th:field ="*{period_of_execution}" id="period_of_execution" >
-        <div style="color:red" th:if="${#fields.hasErrors('period_of_execution')}" th:errors="*{period_of_execution}">Name error</div>
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Document</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--<p>Создать новый документ</p>-->
+<!--<form th:method = "POST" th:action = "@{/documents}" th:object ="${document}">-->
+<!--    <div>-->
+<!--        <lable for="document">Введите предмет‌ ‌поручения</lable>-->
+<!--        <input type="text" th:field ="*{subjectDocument}" id="subject_document">-->
+<!--        <div style="color:red" th:if="${#fields.hasErrors}" th:errors="*{subjectDocument}">Name error</div>-->
+<!--    </div>-->
+<!--    <div>-->
+<!--        <label for="author_document">Выберите автора поручения:</label>-->
+<!--        <select th:field="*{authorDocument}" id="author_document">-->
+<!--            <option th:each="employee : ${employees}" th:value="${employee.getId_employee()}" th:text="${employee}">-->
+<!--            </option>-->
+<!--        </select>-->
+<!--    </div>-->
+<!--    <div>-->
+<!--        <lable for="period_of_execution">Введите срок‌ ‌исполнения</lable>-->
+<!--        <input type="text" th:field ="*{periodOfExecution}" id="period_of_execution" >-->
+<!--        <div style="color:red" th:if="${#fields.hasErrors('period_of_execution')}" th:errors="*{period_of_execution}">Name error</div>-->
 
-    </div>
+<!--    </div>-->
 
-    <div>
-        <lable for="document">Введите текст‌ ‌поручения</lable>
-        <input type="text" th:field ="*{text_document}" id="text_document">
-        <div style="color:red" th:if="${#fields.hasErrors('text_document')}" th:errors="*{text_document}">Name error</div>
+<!--    <div>-->
+<!--        <lable for="document">Введите текст‌ ‌поручения</lable>-->
+<!--        <input type="text" th:field ="*{textDocument}" id="text_document">-->
+<!--        <div style="color:red" th:if="${#fields.hasErrors('text_document')}" th:errors="*{text_document}">Name error</div>-->
 
-    </div>
+<!--    </div>-->
 <!--    <div>-->
 <!--        <label for="executors_document">Выберите исполнителей поручения:</label>-->
-<!--        <select th:object="${document}" th:field="*{executors_document}" th:name ="*{executors_document[0]}" id="executors_document" multiple="multiple" >-->
+<!--        <select th:object="${document}" th:field="*{executorsDocument}"  id="executors_document" multiple="multiple" >-->
 <!--            <option th:each="employee : ${employees}" th:value="${employee.getId_employee()}" th:text="${employee}">-->
 <!--            </option>-->
 <!--        </select>-->
 <!--    </div>-->
 
 
-<!--    <div>-->
-<!--            <label for="executors_document">Выберите исполнителей ‌поручения:</label>-->
+<!--&lt;!&ndash;    <div>&ndash;&gt;-->
+<!--&lt;!&ndash;            <label for="executors_document">Выберите исполнителей ‌поручения:</label>&ndash;&gt;-->
 
-<!--            <select th:object="${employees}" id="executors_document">-->
+<!--&lt;!&ndash;            <select th:object="${employees}" id="executors_document">&ndash;&gt;-->
 
-<!--                <option th:each="employee : ${employees}" th:value="${employee.getId_employee()}"-->
-<!--                        th:text="${employee}">-->
-<!--                </option>-->
-<!--            </select>-->
+<!--&lt;!&ndash;                <option th:each="employee : ${employees}" th:value="${employee.getId_employee()}"&ndash;&gt;-->
+<!--&lt;!&ndash;                        th:text="${employee}">&ndash;&gt;-->
+<!--&lt;!&ndash;                </option>&ndash;&gt;-->
+<!--&lt;!&ndash;            </select>&ndash;&gt;-->
 
-<!--            <input type="submit" value=" Назначить исполнителей">-->
-<!--    </div>-->
+<!--&lt;!&ndash;            <input type="submit" value=" Назначить исполнителей">&ndash;&gt;-->
+<!--&lt;!&ndash;    </div>&ndash;&gt;-->
 
 
-    <input type="submit" value="Сохранить!">
-</form>
-</body>
-</html>
+<!--    <input type="submit" value="Сохранить!">-->
+<!--</form>-->
+<!--</body>-->
+<!--</html>-->

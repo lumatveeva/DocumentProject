@@ -33,7 +33,7 @@ public class Employee {
     @JoinColumn(name = "subdivision_id", referencedColumnName = "id_subdivision" )
     private Subdivision subdivision_id;
 
-    @OneToMany(mappedBy = "author_document")
+    @OneToMany(mappedBy = "authorDocument")
     private List<Document> author_documents;
 
     @ManyToMany

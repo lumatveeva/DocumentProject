@@ -2,9 +2,7 @@ package com.example.DocumentProject.models;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
-import org.springframework.format.annotation.DateTimeFormat;
 
-import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -14,90 +12,91 @@ public class Document {
     @Id
     @Column (name = "id_document")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id_document;
+    private int idDocument;
 
     @Column (name = "subject_document")
     @NotEmpty(message = "Необходимо ввести предмет поручения")
-    private String subject_document;
+    private String subjectDocument;
 
     @ManyToOne
     @JoinColumn(name = "author_document", referencedColumnName = "id_employee")
-    private Employee author_document;
+    private Employee authorDocument;
 
     @ManyToMany(mappedBy = "executor_employee")
-    private List<Employee> executors_document;
+    private List<Employee> executorsDocument;
 
     @Column(name = "period_of_execution")
-//    @NotEmpty(message = "Необходимо ввести срок исполнения поручения")
-    private String period_of_execution;
+    @NotEmpty(message = "Необходимо ввести срок исполнения поручения")
+    private String periodOfExecution;
 
     @Column(name = "text_document")
     @NotEmpty(message = "Необходимо ввести текст поручения")
-    private String text_document;
-//    @Enumerated(EnumType.STRING)
-    @Column(name ="document_status")
-    private String documentStatus;
+    private String textDocument;
 
-    @Transient
+    @Enumerated(EnumType.STRING)
+    @Column(name ="document_status")
+    private DocumentStatus documentStatus;
+
+    @Column(name ="document_done")
     private boolean isDone = false;
 
     public Document() {
     }
 
-    public int getId_document() {
-        return id_document;
+    public int getIdDocument() {
+        return idDocument;
     }
 
-    public void setId_document(int id_document) {
-        this.id_document = id_document;
+    public void setIdDocument(int id_document) {
+        this.idDocument = id_document;
     }
 
-    public String getSubject_document() {
-        return subject_document;
+    public String getSubjectDocument() {
+        return subjectDocument;
     }
 
-    public void setSubject_document(String subject_document) {
-        this.subject_document = subject_document;
+    public void setSubjectDocument(String subject_document) {
+        this.subjectDocument = subject_document;
     }
 
-    public Employee getAuthor_document() {
-        return author_document;
+    public Employee getAuthorDocument() {
+        return authorDocument;
     }
 
-    public void setAuthor_document(Employee author_document) {
-        this.author_document = author_document;
+    public void setAuthorDocument(Employee author_document) {
+        this.authorDocument = author_document;
     }
 
-    public List<Employee> getExecutors_document() {
-        return executors_document;
+    public List<Employee> getExecutorsDocument() {
+        return executorsDocument;
     }
 
-    public void setExecutors_document(List<Employee> executors_document) {
-        this.executors_document = executors_document;
+    public void setExecutorsDocument(List<Employee> executors_document) {
+        this.executorsDocument = executors_document;
     }
 
-    public String getPeriod_of_execution() {
-        return period_of_execution;
+    public String getPeriodOfExecution() {
+        return periodOfExecution;
     }
 
-    public void setPeriod_of_execution(String period_of_execution) {
-        this.period_of_execution = period_of_execution;
+    public void setPeriodOfExecution(String period_of_execution) {
+        this.periodOfExecution = period_of_execution;
     }
 
-    public String getDocumentStatus() {
+    public DocumentStatus getDocumentStatus() {
         return documentStatus;
     }
 
-    public void setDocumentStatus(String documentStatus) {
+    public void setDocumentStatus(DocumentStatus documentStatus) {
         this.documentStatus = documentStatus;
     }
 
-    public String getText_document() {
-        return text_document;
+    public String getTextDocument() {
+        return textDocument;
     }
 
-    public void setText_document(String text_document) {
-        this.text_document = text_document;
+    public void setTextDocument(String text_document) {
+        this.textDocument = text_document;
     }
 
     public boolean isDone() {
