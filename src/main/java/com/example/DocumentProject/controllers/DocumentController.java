@@ -6,6 +6,7 @@ import com.example.DocumentProject.models.Employee;
 import com.example.DocumentProject.services.DocumentService;
 import com.example.DocumentProject.services.EmployeeService;
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +20,7 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping("/documents")
+@Slf4j
 public class DocumentController {
     @Autowired
     private DocumentService documentService;
@@ -39,6 +41,7 @@ public class DocumentController {
         if ((page == null || itemPerPage == null) && sortBy != null){
             model.addAttribute("docs", documentService.findAllSort(sortBy));
         }
+        log.info("Получение списка документов: страница {}, количество элементов на странице {}, сортировка по {}", page, itemPerPage, sortBy);
         return"/documents/documentsAll";
     }
 
@@ -46,6 +49,7 @@ public class DocumentController {
     public void findById(@PathVariable("id") int id, Model model){
         model.addAttribute("doc", documentService.findById(id));
         model.addAttribute("employees", employeeService.findAll());
+        log.info("Поис документа по id {}", id);
 
 //        return "/documents/documentById";
     }
@@ -54,7 +58,7 @@ public class DocumentController {
     public void create(Model model){
         model.addAttribute("document", new Document());
         model.addAttribute("employees", employeeService.findAll());
-//        model.addAttribute("executorsSize", employeeService.findAll().size());
+        log.info("создание нового документа");
 
 //        return "/documents/new";
     }
@@ -65,7 +69,11 @@ public class DocumentController {
      * @return главная страница
      */
     @PostMapping()
-    public String save(@RequestBody Map<String, Object> requestData) {
+    public String save(@RequestBody Map<String, Object> requestData, BindingResult bindingResult) {
+        if(bindingResult.hasErrors()){
+            log.error("Ошибка при создании нового документа");
+            throw new RuntimeException("Ошибка при создании нового документа");
+        }
         // Преобразование данных из JSON в объекты Java
         String subjectDocument = (String) requestData.get("subjectDocument");
         String periodOfExecution = (String) requestData.get("periodOfExecution");
@@ -98,6 +106,7 @@ public class DocumentController {
 
         // Сохранение документа
         documentService.save(document);
+        log.info("Сохранение нового документа: название документа {}", requestData.get("subjectDocument"));
         return "redirect:/documents";
     }
 
@@ -105,33 +114,34 @@ public class DocumentController {
     public void editDocument(@PathVariable("id") int id, Model model){
         model.addAttribute("updatedDocument", documentService.findById(id));
         model.addAttribute("employees", employeeService.findAll());
+        log.info("Изменение документа по id {}", id);
 //        return "documents/updateDocument";
     }
     @PatchMapping("{id}")
     public void updateDocument(@RequestBody Map<String, Object> requestData,
-                               @PathVariable("id") int id){
+                               @PathVariable("id") int id,
+                               BindingResult bindingResult){
+        if(bindingResult.hasErrors()){
+            log.error("Ошибка при обновлении существующего документа");
+            throw new RuntimeException("Ошибка обновления существующего документа");
+        }
         Document updatedDocument = documentService.findById(id);
-
 
         if(requestData.get("subjectDocument") != null ){
             updatedDocument.setSubjectDocument((String) requestData.get("subjectDocument"));
         }
-
         if(requestData.get("periodOfExecution") != null)
         {
             updatedDocument.setPeriodOfExecution((String)requestData.get("periodOfExecution"));
         }
-
         if(requestData.get("authorDocument") != null){
             String authorDocumentId = (String) requestData.get("authorDocument");
             Employee authorDocument = employeeService.findById(Integer.parseInt(authorDocumentId));
             updatedDocument.setAuthorDocument(authorDocument);
         }
-
         if(requestData.get("textDocument") != null){
             updatedDocument.setTextDocument((String) requestData.get("textDocument"));
         }
-
         if((requestData.get("executors")) != null){
             List<Map<String, Object>> executors = (List<Map<String, Object>>) requestData.get("executors");
             List<Employee> executorsEmployee = new ArrayList<>();
@@ -141,15 +151,15 @@ public class DocumentController {
             }
             updatedDocument.setExecutorsDocument(executorsEmployee);
         }
-
-
         documentService.update(updatedDocument,id);
+        log.info("Сохранение измененного документа по id {}", id);
 
     }
 
     @DeleteMapping("{id}/delete")
     public void deleteDocument(@PathVariable("id") int id){
         documentService.delete(id);
+        log.info("Удаление документа id {}", id);
 //        return"redirect:http://localhost:8080/documents";
     }
 
@@ -173,13 +183,5 @@ public class DocumentController {
         documentService.startAcceptance(id);
 //        return "redirect:/documents";
     }
-
-//    @GetMapping("{id}/done")
-//    public String doneDocument(@PathVariable("id") int id){
-//        documentService.doneDocument(id);
-//        return "redirect:/documents";
-//
-//    }
-
 
 }
