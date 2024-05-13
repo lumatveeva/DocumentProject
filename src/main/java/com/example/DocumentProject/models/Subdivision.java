@@ -1,5 +1,6 @@
 package com.example.DocumentProject.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -30,8 +31,7 @@ public class Subdivision {
     @JoinColumn(name = "organization_id", referencedColumnName = "id_organization")
     private Organization organization_id;
 
-    @OneToMany(mappedBy = "subdivision_id")
-    private List<Employee> employees;
+
 
     public Subdivision() {
     }
@@ -76,11 +76,15 @@ public class Subdivision {
         this.organization_id = organization_id;
     }
 
-    public List<Employee> getEmployees() {
-        return employees;
-    }
 
-    public void setEmployees(List<Employee> employees) {
-        this.employees = employees;
+    @Override
+    public String toString() {
+        return "Subdivision{" +
+                "id_subdivision=" + id_subdivision +
+                ", name_subdivision='" + name_subdivision + '\'' +
+                ", сontact_details_subdivision='" + сontact_details_subdivision + '\'' +
+                ", supervisor_subdivision='" + supervisor_subdivision + '\'' +
+                ", organization_id=" + organization_id +
+                '}';
     }
 }

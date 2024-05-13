@@ -1,5 +1,6 @@
 package com.example.DocumentProject.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 
@@ -33,14 +34,7 @@ public class Employee {
     @JoinColumn(name = "subdivision_id", referencedColumnName = "id_subdivision" )
     private Subdivision subdivision_id;
 
-    @OneToMany(mappedBy = "authorDocument")
-    private List<Document> author_documents;
 
-    @ManyToMany
-    @JoinTable(name ="employee_executor_document",
-            joinColumns = @JoinColumn(name = "employee_id"),
-            inverseJoinColumns = @JoinColumn(name ="document_id"))
-    private List<Document> executor_employee;
 
     public Employee() {
     }
@@ -93,24 +87,16 @@ public class Employee {
         this.subdivision_id = subdivision_id;
     }
 
-    public List<Document> getAuthor_documents() {
-        return author_documents;
-    }
-
-    public void setAuthor_documents(List<Document> author_documents) {
-        this.author_documents = author_documents;
-    }
-
-    public List<Document> getExecutor_employee() {
-        return executor_employee;
-    }
-
-    public void setExecutor_employee(List<Document> executor_documents) {
-        this.executor_employee = executor_documents;
-    }
 
     @Override
     public String toString() {
-        return  surname_employee + ' ' + name_employee + ' ' + patronymic_employee;
+        return "Employee{" +
+                "id_employee=" + id_employee +
+                ", surname_employee='" + surname_employee + '\'' +
+                ", name_employee='" + name_employee + '\'' +
+                ", patronymic_employee='" + patronymic_employee + '\'' +
+                ", position_employee='" + position_employee + '\'' +
+                ", subdivision_id=" + subdivision_id +
+                '}';
     }
 }

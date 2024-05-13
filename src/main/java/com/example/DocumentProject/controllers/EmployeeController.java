@@ -3,10 +3,13 @@ package com.example.DocumentProject.controllers;
 import com.example.DocumentProject.models.Employee;
 import com.example.DocumentProject.services.EmployeeService;
 import com.example.DocumentProject.services.SubdivisionService;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/employees")
@@ -18,25 +21,20 @@ public class EmployeeController {
     private SubdivisionService subdivisionService;
 
     @GetMapping()
-    public String findAll(Model model){
-        model.addAttribute("people", employeeService.findAll());
-        return "/employees/employeesAll";
+    @Operation(summary = "Получение информации о всех сотрудниках")
+    public List<Employee> findAll(){
+        return employeeService.findAll();
     }
     @GetMapping("/{id}")
-    public String findById(@PathVariable("id") int id, Model model){
-        model.addAttribute("employee", employeeService.findById(id));
-        return "/employees/employeeById";
+    @Operation(summary = "Получение информации о сотруднике по его Id")
+    public Employee findById(@PathVariable("id") int id, Model model){
+        return employeeService.findById(id);
     }
 
     @GetMapping("/new")
-    public String create(Model model){
-        model.addAttribute("employee", new Employee());
-        model.addAttribute("subdivisions", subdivisionService.findAll());
-        return "/employees/new";
-    }
-
+    @Operation(summary = "Создание нового сотрудника")
     @PostMapping()
-    public String save(@ModelAttribute("employee") Employee employee){
+    public String save(@RequestBody Employee employee){
         employeeService.save(employee);
         return "redirect:/employees";
     }

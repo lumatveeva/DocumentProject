@@ -47,18 +47,6 @@ public class DocumentService {
         documentRepository.deleteById(id);
     }
 
-    @Transactional //назначить автора поручения
-    public void assignStatus(int documentId){
-        documentRepository.findById(documentId).ifPresent(
-                doc -> doc.setDocumentStatus(DocumentStatus.NEW));
-    }
-    @Transactional //назначить исполнителя получения
-    public void assignExecutor(int documentId, List<Employee> executors){
-        documentRepository.findById(documentId).ifPresent(
-                doc -> {
-                    doc.setExecutorsDocument(executors);
-                });
-    }
 
     @Transactional//отправить документ на исполнение
     public void startExecution(int id){
@@ -85,10 +73,5 @@ public class DocumentService {
                     doc.setDone(true);
                 });
     }
-//    public void doneDocument(int id){ // отправка документа на выполнение описана в методе startAcceptance
-//        documentRepository.findById(id).ifPresent(
-//                doc -> doc.setDone(true)
-//        );
-//    }
 
 }

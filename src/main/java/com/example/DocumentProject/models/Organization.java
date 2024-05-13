@@ -1,5 +1,6 @@
 package com.example.DocumentProject.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -29,9 +30,6 @@ public class Organization {
     @NotEmpty(message = "Необходимо ввести руководителя организации")
     @Column(name = "supervisor_organization")
     private String supervisor_organization;
-
-    @OneToMany(mappedBy = "organization_id")
-    private List<Subdivision> subdivisions;
 
     public Organization() {
     }
@@ -76,11 +74,14 @@ public class Organization {
         this.supervisor_organization = supervisor_organization;
     }
 
-    public List<Subdivision> getSubdivisions() {
-        return subdivisions;
-    }
-
-    public void setSubdivisions(List<Subdivision> subdivisions) {
-        this.subdivisions = subdivisions;
+    @Override
+    public String toString() {
+        return "Organization{" +
+                "id_organization=" + id_organization +
+                ", name_organization='" + name_organization + '\'' +
+                ", physical_address_organization='" + physical_address_organization + '\'' +
+                ", legal_address_organization='" + legal_address_organization + '\'' +
+                ", supervisor_organization='" + supervisor_organization + '\'' +
+                '}';
     }
 }

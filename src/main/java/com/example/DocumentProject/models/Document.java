@@ -1,5 +1,6 @@
 package com.example.DocumentProject.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 
@@ -22,8 +23,10 @@ public class Document {
     @JoinColumn(name = "author_document", referencedColumnName = "id_employee")
     private Employee authorDocument;
 
-    @ManyToMany(mappedBy = "executor_employee")
-    private List<Employee> executorsDocument;
+//    @ManyToOne
+//    @JoinColumn(name = "employee_id",referencedColumnName = "id_employee")
+    @Transient
+    private Employee executorsDocument;
 
     @Column(name = "period_of_execution")
     @NotEmpty(message = "Необходимо ввести срок исполнения поручения")
@@ -67,11 +70,11 @@ public class Document {
         this.authorDocument = author_document;
     }
 
-    public List<Employee> getExecutorsDocument() {
+    public Employee getExecutorsDocument() {
         return executorsDocument;
     }
 
-    public void setExecutorsDocument(List<Employee> executors_document) {
+    public void setExecutorsDocument(Employee executors_document) {
         this.executorsDocument = executors_document;
     }
 
@@ -105,5 +108,19 @@ public class Document {
 
     public void setDone(boolean done) {
         isDone = done;
+    }
+
+    @Override
+    public String toString() {
+        return "Document{" +
+                "idDocument=" + idDocument +
+                ", subjectDocument='" + subjectDocument + '\'' +
+                ", authorDocument=" + authorDocument +
+                ", executorsDocument=" + executorsDocument +
+                ", periodOfExecution='" + periodOfExecution + '\'' +
+                ", textDocument='" + textDocument + '\'' +
+                ", documentStatus=" + documentStatus +
+                ", isDone=" + isDone +
+                '}';
     }
 }

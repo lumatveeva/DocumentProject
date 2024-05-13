@@ -2,12 +2,15 @@ package com.example.DocumentProject.controllers;
 
 import com.example.DocumentProject.models.Organization;
 import com.example.DocumentProject.services.OrganizationService;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/organizations")
@@ -16,29 +19,25 @@ public class OrganizationController {
     private OrganizationService organizationService;
 
     @GetMapping()
-    public String findAll(Model model){
-        model.addAttribute("organizations", organizationService.findAll());
-        return "/organizations/organizationsAll";
+    @Operation(summary = "Получение информации о всех организациях")
+    public List<Organization> findAll(){
+        return organizationService.findAll();
     }
 
     @GetMapping("/{id}")
-    public String findById(@PathVariable("id") int id, Model model){
-        model.addAttribute("organization", organizationService.findById(id));
-        return "/organizations/organizationById";
+    @Operation(summary = "Получение информации об организации по Id")
+    public Organization findById(@PathVariable("id") int id){
+        return organizationService.findById(id);
     }
 
-    @GetMapping("/new")
-    public String create(Model model){
-        model.addAttribute("organization", new Organization());
-        return "/organizations/new";
-    }
 
     @PostMapping()
-    public String save(@ModelAttribute("organization") @Valid Organization organization, BindingResult bindingResult){
+    @Operation(summary = "Создание новой организации")
+    public Organization save(@RequestBody @Valid Organization organization, BindingResult bindingResult){
         if(bindingResult.hasErrors()){
-            return "/organizations/new";
+            throw new RuntimeException("Ошибка создания новой организации");
         }
          organizationService.save(organization);
-        return "redirect:/organizations";
+        return organization;
     }
 }

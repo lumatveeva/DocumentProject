@@ -1,11 +1,12 @@
 package com.example.DocumentProject.config;
 
+import com.example.DocumentProject.aspects.DocumentAspects;
 import com.example.DocumentProject.stateMashine.action.DocumentState;
 import com.example.DocumentProject.stateMashine.event.DocumentEvent;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.Message;
-import org.springframework.statemachine.config.EnableStateMachine;
 import org.springframework.statemachine.action.Action;
 import org.springframework.statemachine.config.EnableStateMachineFactory;
 import org.springframework.statemachine.config.EnumStateMachineConfigurerAdapter;
@@ -22,8 +23,9 @@ import java.util.Optional;
 
 @Configuration
 @EnableStateMachineFactory //для того что бы каждый раз создавалась новая StateMashine
-@Slf4j
 public class StateMachineConfig extends EnumStateMachineConfigurerAdapter<DocumentState, DocumentEvent> {
+    private static final Logger log = LoggerFactory.getLogger(DocumentAspects.class);
+
     @Override
     public void configure(StateMachineConfigurationConfigurer<DocumentState, DocumentEvent> config) throws Exception {
 
