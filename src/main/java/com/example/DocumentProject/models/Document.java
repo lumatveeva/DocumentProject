@@ -1,10 +1,11 @@
 package com.example.DocumentProject.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
+import org.springframework.format.annotation.DateTimeFormat;
 
-import java.util.List;
+import java.util.Date;
+import java.util.UUID;
 
 @Entity
 @Table(name = "Document")
@@ -12,29 +13,31 @@ public class Document {
 
     @Id
     @Column (name = "id_document")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idDocument;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
 
     @Column (name = "subject_document")
     @NotEmpty(message = "Необходимо ввести предмет поручения")
-    private String subjectDocument;
+    private String subject;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "author_document", referencedColumnName = "id_employee")
-    private Employee authorDocument;
+    private Employee author_id;
 
 //    @ManyToOne
 //    @JoinColumn(name = "employee_id",referencedColumnName = "id_employee")
     @Transient
-    private Employee executorsDocument;
+    private Employee executors;
 
     @Column(name = "period_of_execution")
-    @NotEmpty(message = "Необходимо ввести срок исполнения поручения")
-    private String periodOfExecution;
+//    @NotEmpty(message = "Необходимо ввести срок исполнения поручения")
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    private Date periodOfExecution;
 
     @Column(name = "text_document")
     @NotEmpty(message = "Необходимо ввести текст поручения")
-    private String textDocument;
+    private String text;
 
     @Enumerated(EnumType.STRING)
     @Column(name ="document_status")
@@ -46,43 +49,43 @@ public class Document {
     public Document() {
     }
 
-    public int getIdDocument() {
-        return idDocument;
+    public UUID getId() {
+        return id;
     }
 
-    public void setIdDocument(int id_document) {
-        this.idDocument = id_document;
+    public void setId(UUID id_document) {
+        this.id = id_document;
     }
 
-    public String getSubjectDocument() {
-        return subjectDocument;
+    public String getSubject() {
+        return subject;
     }
 
-    public void setSubjectDocument(String subject_document) {
-        this.subjectDocument = subject_document;
+    public void setSubject(String subject_document) {
+        this.subject = subject_document;
     }
 
-    public Employee getAuthorDocument() {
-        return authorDocument;
+    public Employee getAuthor_id() {
+        return author_id;
     }
 
-    public void setAuthorDocument(Employee author_document) {
-        this.authorDocument = author_document;
+    public void setAuthor_id(Employee author_document) {
+        this.author_id = author_document;
     }
 
-    public Employee getExecutorsDocument() {
-        return executorsDocument;
+    public Employee getExecutors() {
+        return executors;
     }
 
-    public void setExecutorsDocument(Employee executors_document) {
-        this.executorsDocument = executors_document;
+    public void setExecutors(Employee executors_document) {
+        this.executors = executors_document;
     }
 
-    public String getPeriodOfExecution() {
+    public Date getPeriodOfExecution() {
         return periodOfExecution;
     }
 
-    public void setPeriodOfExecution(String period_of_execution) {
+    public void setPeriodOfExecution(Date period_of_execution) {
         this.periodOfExecution = period_of_execution;
     }
 
@@ -94,12 +97,12 @@ public class Document {
         this.documentStatus = documentStatus;
     }
 
-    public String getTextDocument() {
-        return textDocument;
+    public String getText() {
+        return text;
     }
 
-    public void setTextDocument(String text_document) {
-        this.textDocument = text_document;
+    public void setText(String text_document) {
+        this.text = text_document;
     }
 
     public boolean isDone() {
@@ -113,14 +116,72 @@ public class Document {
     @Override
     public String toString() {
         return "Document{" +
-                "idDocument=" + idDocument +
-                ", subjectDocument='" + subjectDocument + '\'' +
-                ", authorDocument=" + authorDocument +
-                ", executorsDocument=" + executorsDocument +
+                "idDocument=" + id +
+                ", subjectDocument='" + subject + '\'' +
+                ", authorDocument=" + author_id +
+                ", executorsDocument=" + executors +
                 ", periodOfExecution='" + periodOfExecution + '\'' +
-                ", textDocument='" + textDocument + '\'' +
+                ", textDocument='" + text + '\'' +
                 ", documentStatus=" + documentStatus +
                 ", isDone=" + isDone +
                 '}';
+    }
+  private Document (Document.DocumentBuilder builder){
+        setId(builder.id);
+        setSubject(builder.subject);
+        setAuthor_id(builder.author);
+        setExecutors(builder.executors);
+        setPeriodOfExecution(builder.periodOfExecution);
+        setText(builder.text);
+        setDocumentStatus(builder.documentStatus);
+        setDone(builder.isDone);
+  }
+    public static final class DocumentBuilder{
+        private UUID id;
+        private String subject;
+        private Employee author;
+        private Employee executors;
+        private Date periodOfExecution;
+        private String text;
+        private DocumentStatus documentStatus;
+        private boolean isDone = false;
+        public DocumentBuilder() {
+        }
+
+        public Document.DocumentBuilder buildId(UUID val){
+            id = val;
+            return this;
+        }
+        public DocumentBuilder buildSubject(String val){
+            subject = val;
+            return this;
+        }
+        public DocumentBuilder buildAuthorId(Employee val){
+            author = val;
+            return this;
+        }
+        public DocumentBuilder buildExecutor(Employee val){
+            executors = val;
+            return this;
+        }
+        public DocumentBuilder buildPeriodOfExecution(Date val){
+            periodOfExecution = val;
+            return this;
+        }
+        public DocumentBuilder buildText(String val){
+            text = val;
+            return this;
+        }
+        public DocumentBuilder buildDocumentStatus(DocumentStatus val){
+            documentStatus = val;
+            return this;
+        }
+        public DocumentBuilder buildIsDone(boolean val){
+            isDone = val;
+            return this;
+        }
+        public Document build(){
+            return new Document(this) ;
+        }
     }
 }

@@ -1,71 +1,65 @@
 package com.example.DocumentProject.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
 
-import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Table(name = "Subdivision")
 public class Subdivision {
     @Id
     @Column(name = "id_subdivision")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id_subdivision;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
 
     @Column(name = "name_subdivision")
     @NotEmpty(message = "Необходимо ввести название подразделения")
-    private String name_subdivision;
+    private String name;
 
-    @Column(name = "сontact_details_subdivision")
+    @Column(name = "info_subdivision")
     @NotEmpty(message = "Необходимо ввести контактные данные подразделения")
-    private String сontact_details_subdivision;
+    private String info;
 
     @Column(name = "supervisor_subdivision")
     @NotEmpty(message = "Необходимо ввести руководителя подразделения")
-    private String supervisor_subdivision;
+    private String supervisor;
 
-    @ManyToOne()
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "organization_id", referencedColumnName = "id_organization")
     private Organization organization_id;
-
-
-
     public Subdivision() {
     }
-
-    public int getId_subdivision() {
-        return id_subdivision;
+    public UUID getId() {
+        return id;
     }
 
-    public void setId_subdivision(int id_subdivision) {
-        this.id_subdivision = id_subdivision;
+    public void setId(UUID id_subdivision) {
+        this.id = id_subdivision;
     }
 
-    public String getName_subdivision() {
-        return name_subdivision;
+    public String getName() {
+        return name;
     }
 
-    public void setName_subdivision(String name_subdivision) {
-        this.name_subdivision = name_subdivision;
+    public void setName(String name_subdivision) {
+        this.name = name_subdivision;
     }
 
-    public String getСontact_details_subdivision() {
-        return сontact_details_subdivision;
+    public String getInfo() {
+        return info;
     }
 
-    public void setСontact_details_subdivision(String сontact_details_subdivision) {
-        this.сontact_details_subdivision = сontact_details_subdivision;
+    public void setInfo(String info) {
+        this.info = info;
     }
 
-    public String getSupervisor_subdivision() {
-        return supervisor_subdivision;
+    public String getSupervisor() {
+        return supervisor;
     }
 
-    public void setSupervisor_subdivision(String supervisor_subdivision) {
-        this.supervisor_subdivision = supervisor_subdivision;
+    public void setSupervisor(String supervisor_subdivision) {
+        this.supervisor = supervisor_subdivision;
     }
 
     public Organization getOrganization_id() {
@@ -80,11 +74,51 @@ public class Subdivision {
     @Override
     public String toString() {
         return "Subdivision{" +
-                "id_subdivision=" + id_subdivision +
-                ", name_subdivision='" + name_subdivision + '\'' +
-                ", сontact_details_subdivision='" + сontact_details_subdivision + '\'' +
-                ", supervisor_subdivision='" + supervisor_subdivision + '\'' +
+                "id_subdivision=" + id +
+                ", name_subdivision='" + name + '\'' +
+                ", info='" + info + '\'' +
+                ", supervisor_subdivision='" + supervisor + '\'' +
                 ", organization_id=" + organization_id +
                 '}';
+    }
+    private Subdivision(Subdivision.Builder builder){
+        setId(builder.id);
+        setName(builder.name);
+        setInfo(builder.info);
+        setSupervisor(builder.supervisor);
+        setOrganization_id(builder.organization_id);
+    }
+    public static final class Builder{
+        private UUID id;
+        private String name;
+        private String info;
+        private String supervisor;
+        private Organization organization_id;
+        public Builder(){
+
+        }
+        public Builder buildId(UUID val){
+            id = val;
+            return this;
+        }
+        public Builder buildName(String val){
+            name = val;
+            return this;
+        }
+        public Builder buildInfo(String val){
+            info = val;
+            return this;
+        }
+        public Builder buildSupervisor(String val){
+            supervisor = val;
+            return this;
+        }
+        public Builder buildOrganization_id(Organization val){
+            organization_id = val;
+            return this;
+        }
+        public Subdivision build(){
+            return new Subdivision(this);
+        }
     }
 }

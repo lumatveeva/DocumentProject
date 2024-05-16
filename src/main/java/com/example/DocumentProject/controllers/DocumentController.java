@@ -1,6 +1,7 @@
 package com.example.DocumentProject.controllers;
 
 import com.example.DocumentProject.annotations.LoggingAspect;
+import com.example.DocumentProject.generators.DocumentGenerator;
 import com.example.DocumentProject.models.Document;
 import com.example.DocumentProject.services.DocumentService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -12,6 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 
 @RestController
@@ -20,6 +22,8 @@ import java.util.List;
 public class DocumentController {
     @Autowired
     private DocumentService documentService;
+    @Autowired
+    private DocumentGenerator documentGenerator;
 
     /**
      *
@@ -33,7 +37,7 @@ public class DocumentController {
     @LoggingAspect
     @ApiResponse(
             responseCode = "200",
-            description = "Успешное получение информации о книге",
+            description = "Успешное получение информации о документе",
             content = @Content(
                     mediaType = MediaType.APPLICATION_JSON_VALUE)
     )
@@ -59,11 +63,11 @@ public class DocumentController {
     @Operation(summary = "Получение информации о документе по его Id")
     @ApiResponse(
             responseCode = "200",
-            description = "Успешное получение информации о книге",
+            description = "Успешное получение информации о документе",
             content = @Content(
                     mediaType = MediaType.APPLICATION_JSON_VALUE)
     )
-    public Document findById(@PathVariable("id") int id){
+    public Document findById(@PathVariable("id") UUID id){
         return documentService.findById(id);
     }
 
@@ -78,7 +82,7 @@ public class DocumentController {
     @Operation(summary = "Создание нового документа")
     @ApiResponse(
             responseCode = "200",
-            description = "Успешное получение информации о книге",
+            description = "Успешное получение информации о документе",
             content = @Content(
                     mediaType = MediaType.APPLICATION_JSON_VALUE)
     )
@@ -89,8 +93,14 @@ public class DocumentController {
         documentService.save(document);
         return document;
     }
+    @PostMapping("/generate")
+    @LoggingAspect
+    @Operation(summary = "Генерация и сохранение нового документа")
+    public void generateDocument(){
+        documentService.save(documentGenerator.generateDocument());
+    }
 
-    @PatchMapping("{id}")
+    @PatchMapping("/{id}")
     @LoggingAspect
     @Operation(summary = "Обновление документа")
     @ApiResponse(
@@ -100,7 +110,7 @@ public class DocumentController {
                     mediaType = MediaType.APPLICATION_JSON_VALUE)
     )
     public Document updateDocument(@RequestBody Document document,
-                               @PathVariable("id") int id,
+                               @PathVariable("id") UUID id,
                                BindingResult bindingResult){
         if(bindingResult.hasErrors()){
             throw new RuntimeException("Ошибка обновления существующего документа");
@@ -110,10 +120,10 @@ public class DocumentController {
         return document;
     }
 
-    @DeleteMapping("{id}/delete")
+    @DeleteMapping("/{id}/delete")
     @LoggingAspect
     @Operation(summary = "Удаление документа")
-    public void deleteDocument(@PathVariable("id") int id){
+    public void deleteDocument(@PathVariable("id") UUID id){
         documentService.delete(id);
     }
 
@@ -121,25 +131,25 @@ public class DocumentController {
     @LoggingAspect
     @Operation(summary = "Принятие документа в работу")
 
-    public void startExecution(@PathVariable("id") int id){
+    public void startExecution(@PathVariable("id") UUID id){
         documentService.startExecution(id);
     }
     @GetMapping("/{id}/control")
     @LoggingAspect
     @Operation(summary = "Отправка документа на контроль")
-    public void startControl(@PathVariable("id") int id){
+    public void startControl(@PathVariable("id") UUID id){
         documentService.startControl(id);
     }
     @GetMapping("/{id}/revision")
     @LoggingAspect
     @Operation(summary = "Отправка документа на проверку")
-    public void startRevision(@PathVariable("id") int id){
+    public void startRevision(@PathVariable("id") UUID id){
         documentService.startRevision(id);
     }
     @GetMapping("/{id}/accept")
     @LoggingAspect
     @Operation(summary = "Отправка документа на согласование")
-    public void startAcceptance(@PathVariable("id") int id){
+    public void startAcceptance(@PathVariable("id") UUID id){
         documentService.startAcceptance(id);
     }
 }

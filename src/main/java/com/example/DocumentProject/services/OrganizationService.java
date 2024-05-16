@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.UUID;
 
 
 @Service
@@ -15,7 +16,7 @@ public class OrganizationService {
     @Autowired
     private OrganizationRepository organizationRepository;
 
-    public Organization findById(int id){
+    public Organization findById(UUID id){
         return organizationRepository.findById(id).orElse(null);
     }
     public List<Organization> findAll(){
@@ -28,13 +29,13 @@ public class OrganizationService {
     }
 
     @Transactional
-    public void update(Organization updateOrganization, int id){
-        updateOrganization.setId_organization(id);
+    public void update(Organization updateOrganization, UUID id){
+        updateOrganization.setId(id);
         organizationRepository.save(updateOrganization);
     }
 
     @Transactional
-    public void delete(int id){
+    public void delete(UUID id){
         organizationRepository.deleteById(id);
     }
 }

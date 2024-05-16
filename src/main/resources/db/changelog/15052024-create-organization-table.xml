@@ -1,0 +1,18 @@
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <changeSet id="15052024-create-organization-table" author="Liubov Matveeva">
+        <createTable tableName="organization" schemaName="public">
+            <column name="id_organization" type="uuid">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name_organization" type="varchar(255)"/>
+            <column name="physical_address_organization" type="varchar(255)"/>
+            <column name="legal_address_organization" type="varchar(255)"/>
+            <column name="supervisor_organization" type="varchar(255)"/>
+
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>

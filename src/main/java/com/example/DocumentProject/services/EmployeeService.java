@@ -7,13 +7,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class EmployeeService {
     @Autowired
     private EmployeeRepository employeeRepository;
 
-    public Employee findById(int id){
+    public Employee findById(UUID id){
         return employeeRepository.findById(id).orElse(null);
     }
     public List<Employee> findAll(){
@@ -26,13 +27,13 @@ public class EmployeeService {
     }
 
     @Transactional
-    public void update(Employee updateEmployee, int id){
-        updateEmployee.setId_employee(id);
+    public void update(Employee updateEmployee, UUID id){
+        updateEmployee.setId(id);
         employeeRepository.save(updateEmployee);
     }
 
     @Transactional
-    public void delete(int id){
+    public void delete(UUID id){
         employeeRepository.deleteById(id);
     }
 }

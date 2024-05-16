@@ -1,0 +1,28 @@
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <changeSet id="15052024-create-subdivision-table" author="Liubov Matveeva">
+        <createTable tableName="subdivision" schemaName="public">
+            <column name="id_subdivision" type="uuid">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name_subdivision" type="varchar(255)"/>
+            <column name="info_subdivision" type="varchar(255)"/>
+            <column name="supervisor_subdivision" type="varchar(255)"/>
+            <column name="organization_id" type="uuid"/>
+
+        </createTable>
+        <addForeignKeyConstraint baseTableSchemaName="public"
+                                 baseColumnNames="organization_id"
+                                 baseTableName="subdivision"
+                                 constraintName="fk_organization_id"
+                                 referencedColumnNames="id_organization"
+                                 referencedTableName="organization"
+                                 deferrable="false"
+                                 initiallyDeferred="false"
+                                 onDelete="NO ACTION"
+                                 onUpdate="NO ACTION"/>
+    </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,31 @@
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <changeSet id="15052024-create-executors_document-table" author="Liubov Matveeva">
+        <createTable tableName="executors_document" schemaName="public">
+            <column name="employee_id" type="uuid"/>
+            <column name="document_id" type="uuid"/>
+        </createTable>
+        <addForeignKeyConstraint baseTableSchemaName="public"
+                                 baseColumnNames="employee_id"
+                                 baseTableName="executors_document"
+                                 constraintName="fk_employee_id"
+                                 referencedColumnNames="id_employee"
+                                 referencedTableName="employee"
+                                 deferrable="false"
+                                 initiallyDeferred="false"
+                                 onDelete="NO ACTION"
+                                 onUpdate="NO ACTION"/>
+        <addForeignKeyConstraint baseColumnNames="document_id"
+                                 baseTableName="executors_document"
+                                 constraintName="fk_document_id"
+                                 referencedColumnNames="id_document"
+                                 referencedTableName="document"
+                                 deferrable="false"
+                                 initiallyDeferred="false"
+                                 onDelete="NO ACTION"
+                                 onUpdate="NO ACTION"/>
+    </changeSet>
+
+</databaseChangeLog>

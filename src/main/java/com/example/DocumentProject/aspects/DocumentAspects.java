@@ -29,7 +29,7 @@ public class DocumentAspects {
             proceedingJoinPoint.proceed();
             log.info("Успешное выполнение метода: " + resultMethod);
         } catch (Throwable e) {
-            log.error("Оштбка выполнения метода: " + resultMethod);
+            log.error("Ошибка выполнения метода: " + resultMethod);
             throw new ExecutionRestMethodException("Ошибка при выполнении метода ", e);
         }
     }
